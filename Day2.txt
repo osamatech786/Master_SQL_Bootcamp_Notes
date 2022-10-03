@@ -1,0 +1,58 @@
+                                 --Day 2 SQL Notes--
+-- Creating a new database
+CREATE DATABASE MissionSQLCopy;
+
+-- Selecting Database, User and Timestamp
+SELECT DB_NAME() ,CURRENT_USER , CURRENT_TIMESTAMP;
+
+-- Switching to MissionSQL database
+USE MissionSQL;
+
+--Table Creation 
+CREATE TABLE employee(
+emp_id INT,
+emp_name VARCHAR(20),
+emp_salary INT,
+emp_addr VARCHAR(20)); --DDL
+
+-- CRUD Operations -- Create, Read, Update, Delete
+
+-- Describing table
+SP_HELP employee --sp_help is similar to desc 
+
+-- Inserting data into Employee
+INSERT INTO employee VALUES
+ (1, 'Pavan', 100000, 'Hyd')
+,(2, 'Deepak', 90000, 'Hyd')
+,(3, 'Shiva', 50000, 'Blr')
+,(4, 'Ramesh', 75000, 'Hyd')
+,(5, 'Suresh', 55000, 'Chn')
+,(6, 'Naresh', 60000, 'Blr')
+
+-- Select data from employee
+SELECT * FROM employee;
+
+-- Selecting top 3 rows
+SELECT TOP(3) * FROM employee;
+
+--Column aliasing
+SELECT TOP(3) emp_id AS Id,emp_salary AS Salary FROM employee
+
+-- Deletes only data
+DELETE FROM employee -- only data got deleted but not structure
+
+-- To describe the structure of the table 
+-- sp_help is similar to desc  
+SP_HELP employee;
+
+-- Deletes the table along with data permanently
+DROP TABLE employee;
+
+-- To store salary as smallint datatype
+CREATE TABLE employee1(
+emp_name VARCHAR(20),
+emp_salary SMALLINT)
+
+INSERT INTO employee1 VALUES ('Deepak', 20000)
+
+SELECT * FROM employee1

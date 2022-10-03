@@ -1,0 +1,49 @@
+USE MissionSQL;
+
+SELECT 10*2+5
+
+SELECT SQRT(100)
+
+SELECT * FROM sales;
+
+SELECT product_name, COUNT(product_name) 
+from sales group by product_name;
+
+SELECT product_name, COUNT(product_name) , SUM(price), AVG(price)
+from sales group by product_name;
+
+--aliasing
+SELECT product_name, COUNT(product_name) AS 'Units Sold'
+, SUM(price) AS 'Total Sales Value'
+, AVG(price) AS 'Average Price'
+from sales group by product_name;
+
+-- HAVING clause
+SELECT product_name, COUNT(product_name) AS 'Units Sold'
+, SUM(price) AS 'Total Sales Value'
+, AVG(price) AS 'Average Price'
+from sales group by product_name
+HAVING SUM(price)>200;
+
+SELECT * FROM sales;
+
+--CHILD
+CREATE TABLE 
+
+CREATE DATABASE ecommerce;
+USE ecommerce
+CREATE TABLE Products(Product_ID int primary key identity(1,1),
+                      Product_Name varchar(100) NOT NULL);
+
+INSERT INTO Products(Product_Name) VALUES('Washing Machine')
+INSERT INTO Products(Product_Name) VALUES('Phone')
+INSERT INTO Products(Product_Name) VALUES('Laptop')
+INSERT INTO Products(Product_Name) VALUES('PhotoFrame')
+INSERT INTO Products(Product_Name) VALUES('Toaster')
+
+CREATE TABLE Sales(Sales_ID INT PRIMARY KEY identity(1,1),
+                   Product_ID INT NOT NULL
+				   FOREIGN KEY REFERENCES Products(Product_ID),
+				   Qty INT,
+				   Price
+				   Discount

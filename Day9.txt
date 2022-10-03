@@ -1,0 +1,257 @@
+USE MissionSQL;
+
+SELECT DB_NAME() AS DB, CURRENT_TIMESTAMP AS Date_Time;
+
+DROP TABLE Customers;
+
+CREATE TABLE Customers(Customer_ID INT PRIMARY KEY IDENTITY(1,1),
+                       Customer_Name VARCHAR(50),
+					   Customer_Mob VARCHAR(15));
+
+INSERT INTO Customers (Customer_Name, Customer_Mob) 
+VALUES
+('Sourabh','9479864026'),
+('Deepak','9479864025'),
+('Ram','9479864022'),
+('Ajay','9479864222'),
+('Shyam','9479864555'),
+('Pavan','9479864789');
+
+-- LEN(Column_Name) 
+-- To get length of the String
+SELECT *, LEN(Customer_Name) AS Name_Length
+FROM Customers;
+
+-- LEFT(Column_Name)
+-- To get specified characters from left
+SELECT *, LEN(Customer_Name) AS Name_Length,
+LEFT(Customer_Name,3) FROM Customers;
+
+
+-- RIGHT(Column_Name)
+-- To get specified characters from Right
+SELECT *, LEN(Customer_Name) AS Name_Length,
+LEFT(Customer_Name,3),
+RIGHT(Customer_Name,4)
+FROM Customers;
+
+
+-- LOWER(Column_Name)
+-- To convert string to lowercase
+SELECT *, LEN(Customer_Name) AS Name_Length,
+LOWER(Customer_Name) AS Lowercase
+FROM Customers;
+
+
+-- UPPER(Column_Name)
+-- To convert string to Uppercase
+SELECT *, LEN(Customer_Name) AS Name_Length,
+UPPER(Customer_Name) AS Uppercase
+FROM Customers;
+
+-- UPPER(Column_Name)
+-- To convert string to Uppercase
+SELECT *, LEN(Customer_Name) AS Name_Length,
+UPPER(Customer_Name) AS Uppercase
+FROM Customers;
+
+-- REVERSE(Column_Name)
+-- To reverse the given String
+SELECT Customer_Name,REVERSE(Customer_Name) FROM Customers;
+
+SELECT REVERSE('SOUMYA') AS Reverse;
+
+
+INSERT INTO Customers (Customer_Name, Customer_Mob) VALUES
+('   Anil','9479864020'),
+('Raj   ','9479864028'),
+('   Suresh   ','9479864777');
+
+SELECT * FROM Customers;
+
+SELECT Customer_Name, LEN(Customer_Name) FROM Customers; 
+
+--LTRIM(), RTRIM(), TRIM()
+-- To remove empty characters from left , right & both
+SELECT Customer_Name, 
+LTRIM(Customer_Name), 
+RTRIM(Customer_Name),
+TRIM(Customer_Name) FROM Customers; 
+
+ALTER TABLE Customers ADD Insert_Date DATE;
+--ALTER TABLE Customers ALTER COLUMN Insert_Date DATE;
+
+INSERT INTO Customers (Customer_Name, Customer_Mob,Insert_Date) VALUES
+('Radhika','9479864020',GETDATE());
+
+SELECT * FROM Customers;
+
+--FORMAT()
+--Used to convert Date into specified format
+SELECT *,FORMAT(Insert_Date,'d','en-US') FROM Customers;
+SELECT *,FORMAT(Insert_Date,'d','no') FROM Customers;
+SELECT *,FORMAT(Insert_Date,'d','zu') FROM Customers;
+
+SELECT * FROM CUSTOMERS;
+
+-- SUBSTRING(Column_Name, Index, No_Of_Chars)
+SELECT Customer_Name, SUBSTRING(Customer_Name, 4 , 3)
+FROM Customers;
+
+--Sourabh
+--1234567
+
+ALTER TABLE Customers ADD Age INT;
+--ALTER TABLE Customers ALTER COLUMN Age TINYINT;
+
+SELECT * FROM Customers;
+
+INSERT INTO Customers (Customer_Name, Customer_Mob,Insert_Date,Age) VALUES
+('Sushruta','6565656565',GETDATE(),26);
+INSERT INTO Customers (Customer_Name, Customer_Mob,Insert_Date,Age) VALUES
+('Elia','9595959595',GETDATE(),-26); 
+-- Arithmetic overflow error for data type tinyint, value = -26
+
+--ABS()
+-- To display negative int value as positive value
+SELECT Age, ABS(Age) FROM Customers;
+
+--CURRENT_TIMESTAMP
+-- To display current date and time upto milliseconds
+SELECT CURRENT_TIMESTAMP;
+
+SELECT * FROM Customers;
+
+--DATEADD()
+-- To add, subtract specified no of months, years to the current date
+SELECT *, DATEADD(YEAR,5,Insert_Date) FROM Customers;
+SELECT *, DATEADD(YEAR,-5,Insert_Date) FROM Customers;
+SELECT *, DATEADD(MONTH,2,Insert_Date) FROM Customers;
+
+--DATEDIFF()
+SELECT DATEDIFF(YEAR, '2018/09/29','2022/09/29') AS YEAR_DIFF
+SELECT DATEDIFF(MONTH, '2018/09/29','2022/09/29') AS  MONTH_DIFF
+SELECT DATEDIFF(DAY, '2018/09/29','2022/09/29') AS DAYS_DIFF
+
+
+--DATEPART()
+-- To extract Year, Month , Day from Specified Date
+
+SELECT DATEPART(YEAR, Insert_Date) AS Date 
+FROM Customers;
+
+SELECT DATEPART(MONTH, Insert_Date) AS Date 
+FROM Customers;
+
+SELECT *,DATEPART(YEAR, Insert_Date) AS Date 
+FROM Customers;
+
+SELECT DATEPART(YEAR, Insert_Date) AS Date 
+FROM Customers WHERE Insert_Date IS NOT NULL;
+
+--ISNUMERIC()
+-- To check whether the column value is numeric or not
+SELECT *, ISNUMERIC(Age) FROM Customers; 
+-- 1 indicates it is numeric coulmn
+
+SELECT *, ISNUMERIC(Customer_Name) FROM Customers; 
+-- 0 indicates it is non-numeric column
+
+--COALESCE()
+-- Returns first non-null value
+
+SELECT COALESCE(NULL, NULL, 'PAVAN', NULL)
+SELECT COALESCE(NULL,0)
+
+ALTER TABLE Customers ADD First_Name VARCHAR(50);
+ALTER TABLE Customers ADD Middle_Name VARCHAR(50)
+ALTER TABLE Customers ADD Last_Name VARCHAR(50)
+
+SELECT * FROM Customers;
+
+INSERT INTO Customers (Customer_Name, Customer_Mob,Insert_Date,Age,First_Name,
+Middle_Name,Last_Name) 
+VALUES
+('K Suresh','6565656565',GETDATE(),26, 'K',NULL,'SURESH');
+
+INSERT INTO Customers (Customer_Name, Customer_Mob,Insert_Date,Age,First_Name,
+Middle_Name,Last_Name) 
+VALUES
+('RAM KUMAR SHARMA','6565656565',GETDATE(),26, 'RAM','KUMAR','SHARMA');
+
+INSERT INTO Customers (Customer_Name, Customer_Mob,Insert_Date,Age,First_Name,
+Middle_Name,Last_Name) 
+VALUES
+('KUMAR','6565656565',GETDATE(),26, 'KUMAR',NULL,NULL);
+
+INSERT INTO Customers (Customer_Name,Customer_Mob,Insert_Date,Age,First_Name,
+Middle_Name,Last_Name) 
+VALUES
+('K','6565656565',GETDATE(),26, NULL,'K',NULL);
+
+SELECT * FROM Customers; 
+
+SELECT *,COALESCE(First_Name,Middle_Name,Last_Name, 'NOT AVAILABLE') 
+FROM Customers;
+
+SELECT *, TRIM(Customer_Name)
+FROM Customers ORDER BY TRIM(Customer_Name);
+
+INSERT INTO Customers VALUES('abhi','9888888888',GETDATE(),30,'Abhi','K',NULL)
+INSERT INTO Customers VALUES('virat','9888888888',GETDATE(),30,'Virat','Kohli',NULL)
+INSERT INTO Customers VALUES('dhoni','9888888887',GETDATE(),30,'Dhoni','K','S')
+
+SELECT * FROM Customers;
+
+--STUFF(column_name, start_pos, no_of_chars, replace_expr)
+-- To Capitalize First character
+SELECT *,
+STUFF(Customer_Name,1,1,UPPER(LEFT(Customer_Name,1)))
+FROM Customers;
+
+SELECT Customer_Name,
+STUFF(Customer_Name,1,1,UPPER(LEFT(Customer_Name,1))) AS Capitalize
+FROM Customers WHERE Customer_Name IN ('abhi','virat','dhoni')
+
+Customer_Name	Captitalize
+abhi			Abhi
+virat			Virat
+dhoni			Dhoni
+
+--REPLACE(Column_Name, Search_str, Replace_str)
+SELECT REPLACE(Customer_Name,'rab','tts') FROM Customers;
+
+
+CREATE TABLE Sales_1(Sales_ID INT PRIMARY KEY IDENTITY(1,1),
+                     Product_ID INT,
+                   Qty INT,
+				   Price Decimal(5,2),
+				   Discount Decimal(5,2))
+
+INSERT INTO Sales_1(Product_ID,Qty, Price, Discount)
+VALUES
+(1,1,250.00,20),
+(1,1,350.00,20),
+(2,1,200.00,10),
+(3,1,250.00,20),
+(4,1,250.00,20),
+(8,1,300.00,10),
+(1,1,235.75,10);
+
+SELECT * FROM SALES_1
+
+--CEILING()
+-- Round off to nearest integer
+SELECT *,CEILING(Price) FROM SALES_1;
+
+--FLOOR()
+--Excludes the decimal part
+SELECT *,FLOOR(Price) FROM SALES_1;
+
+SELECT *,CEILING(Price),FLOOR(Price) FROM SALES_1;
+
+26.75 --> CEILING() --> 27
+26.75 --> FLOOR() --> 26
+
+--ROUND()
+SELECT *,ROUND(Price,1) FROM Sales_1;

@@ -1,0 +1,36 @@
+USE MissionSQL;
+CREATE TABLE emp
+(salary DECIMAL(5,2))
+
+INSERT INTO emp VALUES(123.1);
+
+SELECT * FROM emp
+
+-- CHAR(10) - It is fixed - 10 bytes
+-- VARCHAR(10) - 'How' , only 3 bytes in memory 
+-- NCHAR(10) -- stores the fixed data unicode
+-- NVARCHAR(10 -- stores the variable length data in unicode
+
+CREATE TABLE emp3(name NCHAR(10))
+INSERT INTO emp3 VALUES(N'$Hello')
+
+CREATE TABLE emp4(
+NAME CHAR(10), 
+emp_id INT PRIMARY KEY, 
+salary NUMERIC(10,5))
+
+SELECT * FROM emp4
+INSERT INTO emp4 VALUES('Deepak', 1, 4872.00)
+INSERT INTO emp4 VALUES('Deepak', 2, 4872.00)
+-- INSERT INTO emp4 VALUES('Deepak', 1, 4872.00) -- Cannot insert duplicate key
+
+
+CREATE TABLE salary(
+eid int foreign key references emp4(emp_id),
+current_sal int)
+
+-- Note : emp_id should be a primary or unique key in emp4 table
+INSERT INTO salary VALUES(1, 10000.00)
+INSERT INTO salary VALUES(10, 10000.00)
+
+SP_HELP emp4 -- To display structure of emp4 table

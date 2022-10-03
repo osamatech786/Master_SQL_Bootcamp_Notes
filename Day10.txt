@@ -1,0 +1,198 @@
+--USE MissionSQL;
+
+-- Stored Procedures
+
+-- Why Stored Procedures?
+	-- Don't write query again and again
+	-- Performance -> reduces compile time
+	-- Security
+	
+-- Creating SP
+--CREATE PROCEDURE get_sales
+--AS
+--	BEGIN
+--		SELECT SUM(Price) AS Total_Sales FROM sales_1;
+--	END
+
+--  ALTERING Stored Procedure
+ALTER PROCEDURE get_sales
+AS
+	BEGIN
+		SELECT SUM(Price) AS Total_Sales FROM sales_1;
+	END
+
+-- CALLING A STORED PROCEDURE	
+EXEC dbo.get_sales
+
+SELECT * FROM Sales_1
+
+CREATE SCHEMA operations;
+CREATE PROCEDURE operations.get_sales
+AS
+	BEGIN
+		SELECT SUM(Price) AS Total_Sales FROM sales_1;
+	END
+
+-- CALLING A STORED PROCEDURE	
+EXEC dbo.get_sales
+
+ALTER PROCEDURE operations.get_sales
+AS
+	BEGIN
+		SELECT SUM(Price) AS Total_Sales FROM sales_1
+		WHERE Product_ID=1;
+	END
+
+EXEC operations.get_sales
+
+-- Parameterized Stored Procedure
+
+ALTER PROCEDURE operations.get_sales @pid INT
+AS
+	BEGIN
+		SELECT SUM(Price) AS Total_Sales FROM sales_1
+		WHERE Product_ID=@pid;
+	END
+
+-- CALLING Procedure with Parameter @pid
+-- EXEC Proc_Name @pid 
+EXEC operations.get_sales 1
+EXEC operations.get_sales 2
+EXEC operations.get_sales 3
+EXEC operations.get_sales 4
+EXEC operations.get_sales 5 -- NULL (Product_ID 5 does not exists
+
+-- Multi Parameterized Procedure
+ALTER PROCEDURE operations.get_sales @pid INT, @pvalue DECIMAL(5,2)
+AS
+	BEGIN
+		SELECT SUM(Price) AS Total_Sales FROM sales_1
+		WHERE Product_ID=@pid AND Price>=@pvalue;
+	END
+
+EXEC operations.get_sales 1,300
+
+-- Default vaalue for parameter
+ALTER PROCEDURE operations.get_sales @pid INT, @pvalue DECIMAL(5,2) = 0
+AS
+	BEGIN
+		SELECT SUM(Price) AS Total_Sales FROM sales_1
+		WHERE Product_ID=@pid AND Price>=@pvalue;
+	END
+
+EXEC operations.get_sales 1 -- with default value for param @pvalue
+EXEC operations.get_sales 1, 300 -- without default value for param @pvalue
+
+SELECT * FROM Sales_1
+
+SELECT * FROM [dbo].[student_basic_details]
+
+INSERT INTO Student_Basic_Details VALUES
+('Suresh','9687937746','XYZ'),
+('Ram','9687937743','XYZ'),
+('Shyam','9687937741','XYZ')
+
+-- Functions
+
+-- Creating Function
+  
+--Syntax
+-- CREATE FUNCTION SCHEMA.FUNCTION_NAME(Parameters)
+		--RETURNS Datatype`
+		--AS
+		  -- BEGIN
+		  --    DECLARE Var Datatype
+		  --	SELECT QUERY
+		  --    RETURN
+		  --END
+
+--Function To retreive first character from Student_Name
+
+CREATE FUNCTION get_first_letter (@Student_Name varchar(50))
+RETURNS VARCHAR(1)
+
+ AS
+	 BEGIN
+		  DECLARE @C VARCHAR(1)
+		  SELECT @C = SUBSTRING(@Student_Name, 1, 1) 
+		  RETURN @C
+	 END
+
+
+SELECT *,dbo.get_first_letter(Student_Name) AS First_Char
+FROM [dbo].[student_basic_details]
+
+
+CREATE FUNCTION get_name_letter (@Student_Name varchar(50))
+RETURNS INT
+
+ AS
+	 BEGIN
+		  DECLARE @C INT
+		  SELECT @C = LEN(@Student_Name) 
+		  RETURN @C
+	 END
+
+SELECT *,
+dbo.get_first_letter(Student_Name) AS First_Char,
+dbo.get_name_letter(Student_Name) AS Length
+FROM [dbo].[student_basic_details]
+
+INSERT INTO Student_Scores VALUES('Xyz', 45)
+
+SELECT * FROM Student_Scores
+
+
+/****** Script for SelectTopNRows command from SSMS  ******/
+SELECT TOP (1000) [Student_ID]
+      ,[Student_Name]
+      ,[Score]
+  FROM [MissionSQL].[dbo].[Student_Scores]
+
+Student_ID	Student_Name	Score
+1			Sourabh			90.00
+2			Deepak			80.00
+3			Ram				90.00
+4			Shyam			50.00
+5			Anil			60.00
+6		    Xyz				45.00
+
+  --CASE WHEN
+-- To get Grades using CASE WHEN 
+-- 90-100 --> A
+-- 70-89 --> B
+-- 60-69 --> C
+-- 50-59 -- > D
+-- else --> E
+
+-- Using BETWEEN , AND
+SELECT Student_Name, 
+CASE 
+	WHEN Score BETWEEN 90 AND 100 THEN 'A' 
+	WHEN Score BETWEEN 70 AND 89 THEN 'B'
+	WHEN Score BETWEEN 60 AND 69 THEN 'C'
+	WHEN Score BETWEEN 50 AND 59 THEN 'D'
+	ELSE 'E'
+END AS 'Grade'
+FROM Student_Scores
+
+
+CREATE FUNCTION get_grades(@S Decimal(5,2))
+RETURNS VARCHAR(20)
+
+ AS
+	 BEGIN
+		  DECLARE @G VARCHAR(20)
+		  SELECT @G = CASE WHEN @S BETWEEN 90 AND 100 THEN 'Grade A' 
+						   WHEN @S BETWEEN 70 AND 89  THEN 'Grade B'
+						   WHEN @S BETWEEN 60 AND 69  THEN 'Grade C'
+						   WHEN @S BETWEEN 50 AND 59  THEN 'Grade D'
+						   ELSE 'Fail'
+					  END 
+		  RETURN @G
+	 END
+
+
+SELECT *,
+dbo.get_grades(Score) AS 'Grades'
+FROM Student_Scores

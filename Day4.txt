@@ -1,0 +1,80 @@
+USE MISSIONSQL;
+
+     -- Live Scenario on Elections
+     -- ==========================
+
+CREATE DATABASE election_db;
+
+CREATE SCHEMA voters;
+
+-- Creating citizen table without DEAFULT option for country column
+CREATE TABLE citizen(citizen_id INT PRIMARY KEY IDENTITY(100,1),
+                     citizen_name VARCHAR(100) NOT NULL,
+					 aadhar_no VARCHAR(12) UNIQUE,
+					 country VARCHAR(10)
+					 )
+
+DROP TABLE citizen
+
+-- Creating citizen table with DEAFULT option for country column
+CREATE TABLE citizen(citizen_id INT PRIMARY KEY IDENTITY(100,1),
+                     citizen_name VARCHAR(100) NOT NULL,
+					 aadhar_no VARCHAR(12) UNIQUE,
+					 country VARCHAR(10) DEFAULT 'India'
+					 )
+
+
+INSERT INTO citizen(citizen_name, aadhar_no)
+VALUES ('Sourabh', '997733342223')
+
+INSERT INTO citizen(citizen_name, aadhar_no)
+VALUES ('Deepak', '997733342221')
+
+INSERT INTO citizen(citizen_name, aadhar_no)
+VALUES ('Ram', '997733342222')
+
+INSERT INTO citizen(citizen_name)
+VALUES ('Shyam') -- Inserts NULL for aadhar_no column
+
+SELECT * FROM citizen;
+
+CREATE TABLE voters(id INT PRIMARY KEY IDENTITY(1,1), 
+                    voter_id INT NOT NULL UNIQUE,
+					voter_name VARCHAR(100) NOT NULL,
+					age INT CHECK (age>=18),
+					mobile_no VARCHAR(10) unique,
+					citizen_id INT FOREIGN KEY REFERENCES Citizen(citizen_id)
+					)
+
+INSERT INTO voters(voter_id, voter_name, age, mobile_no, citizen_id)
+VALUES (100, 'Sourabh', 25, '9479864026', 100)
+
+INSERT INTO voters(voter_id, voter_name, age, mobile_no, citizen_id)
+VALUES (100, 'Sourabh', 25, '9479864026', 100) -- Violation of UNIQUE KEY constraint. Cannot insert duplicate key in object 'dbo.voters'. The duplicate key value is (9479864026).
+
+INSERT INTO voters(voter_id, voter_name, age, mobile_no, citizen_id)
+VALUES (101, 'Swathi', 25, '9479864025', 102)
+
+SELECT *  FROM voters;
+
+SELECT * FROM citizen;
+
+DROP TABLE voters
+
+INSERT INTO voters(voter_id, voter_name, age, mobile_no, citizen_id)
+VALUES (106, 'Deepak', 20, '9479864088', 101)
+
+
+CREATE TABLE department(
+dept_id INT PRIMARY KEY IDENTITY(1,1),
+department_name VARCHAR(100))
+
+
+CREATE TABLE employee(
+emp_id INT PRIMARY KEY IDENTITY(1,1),
+emp_name VARCHAR(100) NOT NULL,
+salary INT, 
+dept_id INT FOREIGN KEY REFERENCES department(dept_id))
+
+
+

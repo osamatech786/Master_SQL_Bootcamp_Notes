@@ -1,0 +1,108 @@
+USE MissionSQl;
+
+CREATE TABLE sales(sales_id INT PRIMARY KEY IDENTITY(1,1),
+				   product_name VARCHAR(100) NOT NULL,
+				   sales_date SMALLDATETIME,
+				   qty INT,
+				   price DECIMAL(5,2));
+
+SP_HELP sales;
+
+SELECT * FROM Sales;
+
+INSERT INTO Sales(product_name, sales_date, qty, price)
+VALUES('Washing Machine','22/09/2022',1,234.33) 
+-- The conversion of a varchar data type to a smalldatetime data type 
+-- resulted in an out-of-range value.
+--The statement has been terminated.
+
+-- Inserting date column value using GETDATE()
+INSERT INTO Sales(product_name, sales_date, qty, price)
+VALUES('Washing Machine',GETDATE(),1,234.33)
+INSERT INTO Sales(product_name, sales_date, qty, price)
+VALUES('Laptop',GETDATE(),1,150)
+INSERT INTO Sales(product_name, sales_date, qty, price)
+VALUES('Washing Machine',GETDATE(),1,204.33)
+INSERT INTO Sales(product_name, sales_date, qty, price)
+VALUES('Laptop',GETDATE(),1,200)
+INSERT INTO Sales(product_name, sales_date, qty, price)
+VALUES('Phone',GETDATE(),1,160.33)
+
+SELECT * FROM Sales;
+
+-- To get top 2 rows using TOP(2)
+SELECT TOP(2)* FROM Sales;
+
+-- Unique product values from column using DISTINCT
+SELECT DISTINCT product_name FROM Sales;
+
+-- Selecting few columns from Sales
+-- Peformance wise this runs faster because of relevant info
+SELECT product_name, price from Sales;
+
+ALTER TABLE Sales ADD discount DECIMAL(5,2)
+
+SELECT * FROM Sales;
+
+
+INSERT INTO Sales(product_name, sales_date, qty, price, discount)
+VALUES('Phone',GETDATE(),1,160.33,10)
+
+ALTER TABLE Sales ADD discount DECIMAL(5,2)
+ALTER TABLE sales DROP COLUMN discount;
+ALTER TABLE Sales ADD qty_available DECIMAL(5,2)
+
+SELECT * FROM Sales;
+ALTER TABLE Sales ALTER COLUMN qty_available INT
+
+sp_help Sales;
+
+SELECT * FROM sales;
+
+ALTER TABLE sales DROP COLUMN qty_available;
+
+SELECT * FROM sales;
+
+-- ORDER BY ASC
+SELECT * FROM sales ORDER BY price;
+SELECT * FROM sales ORDER BY 5; -- 5 indicates column number (i.e price) 
+SELECT * FROM sales ORDER BY price, sales_date DESC;
+
+-- ORDER BY DESC
+SELECT * FROM sales ORDER BY price DESC;
+
+SELECT * FROM sales;
+
+-- Filtering data using WHERE clause
+-- OPERATORS
+
+SELECT * FROM sales WHERE price>200;  -- greater than 200
+SELECT * FROM sales WHERE price>=200; --including 200 with "="
+SELECT * FROM sales WHERE price<200;  --less than 200
+SELECT * FROM sales WHERE price=200;  --equal to 200
+SELECT * FROM sales WHERE price BETWEEN 150 AND 200;  -- BETWEEN ( 150 and 200 are inclusive)
+SELECT * FROM sales WHERE price > 150 AND price < 200; -- Exclusive 150 and 200
+
+INSERT INTO Sales(product_name, sales_date, qty, price)
+VALUES('Laptop Mac',GETDATE(),1,160.33)
+
+SELECT * FROM Sales;
+
+-- LIKE Operator
+-- Wild card (%)
+SELECT * FROM sales WHERE product_name LIKE 'LAP%'
+
+SELECT * FROM sales WHERE product_name LIKE '%MAC%' -- MAC in between 
+SELECT * FROM sales WHERE product_name NOT LIKE '%MAC%' -- not MAC in between 
+
+SELECT *  FROM sales WHERE product_name IN('Laptop','Phone');
+
+SELECT *  FROM sales WHERE product_name NOT IN('Laptop','Phone'); -- other than Laptop and Phone
+
+
+
+
+
+--sales_id, product_name, sales_date, qty, price
+--1, Washing Machine, 2022-09-22 23:26:00, 1, 234.33
+
