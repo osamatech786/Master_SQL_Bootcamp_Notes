@@ -1,6 +1,7 @@
-                                 --Day 2 SQL Notes--
+                                 --Day 2 Master SQL Bootcamp Notes--
+
 -- Creating a new database
-CREATE DATABASE MissionSQLCopy;
+CREATE DATABASE MissionSQL;
 
 -- Selecting Database, User and Timestamp
 SELECT DB_NAME() ,CURRENT_USER , CURRENT_TIMESTAMP;
@@ -15,10 +16,10 @@ emp_name VARCHAR(20),
 emp_salary INT,
 emp_addr VARCHAR(20)); --DDL
 
--- CRUD Operations -- Create, Read, Update, Delete
-
 -- Describing table
 SP_HELP employee --sp_help is similar to desc 
+
+-- CRUD Operations -- Create, Read, Update, Delete
 
 -- Inserting data into Employee
 INSERT INTO employee VALUES
@@ -40,10 +41,6 @@ SELECT TOP(3) emp_id AS Id,emp_salary AS Salary FROM employee
 
 -- Deletes only data
 DELETE FROM employee -- only data got deleted but not structure
-
--- To describe the structure of the table 
--- sp_help is similar to desc  
-SP_HELP employee;
 
 -- Deletes the table along with data permanently
 DROP TABLE employee;

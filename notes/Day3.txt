@@ -1,3 +1,5 @@
+                                 --Day 3 Master SQL Bootcamp Notes--
+
 USE MissionSQL;
 CREATE TABLE emp
 (salary DECIMAL(5,2))

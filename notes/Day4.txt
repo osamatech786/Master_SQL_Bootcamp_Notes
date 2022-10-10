@@ -1,3 +1,5 @@
+                                 --Day 4 Master SQL Bootcamp Notes--
+
 USE MISSIONSQL;
 
      -- Live Scenario on Elections

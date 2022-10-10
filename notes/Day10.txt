@@ -72,7 +72,7 @@ AS
 
 EXEC operations.get_sales 1,300
 
--- Default vaalue for parameter
+-- Default value for parameter
 ALTER PROCEDURE operations.get_sales @pid INT, @pvalue DECIMAL(5,2) = 0
 AS
 	BEGIN

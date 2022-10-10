@@ -1,0 +1,18 @@
+                                 --Day 1 Master SQL Bootcamp Notes--
+
+--Steps to design a database:
+    --1.	First of all, draw required tables on paper having required columns
+    --2.	Define data type of each column
+    --3.	Add constraints to all columns (PK, FK, Not Null, Unique, default, identity/auto-increment/serial, check)
+    --4.	Write DDL script for that ERD
+
+--DDL steps:
+    --1.	Create database dbName
+    --2.	Create schema schemaName
+    --3.	Create table schemaName.tableName(col1Name int primary key identity(1,1),	--start from 1 and step 1
+                                                --Col2Name varchar(100) not null,
+                                                --Col3Name varchar(12) unique,
+                                                --Col4Name varchar(10) )
+
+--•	Default schema is dbo (dbo.tableName) (Schema just logically divides all the tables for example in big company like TCS we have multiple departments like accounts sales marketing hr so we can have schema for each department)
+--•	Joins are only for select not for storage, for storage relation we have PK and FK

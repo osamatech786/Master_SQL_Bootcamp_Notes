@@ -1,0 +1,23 @@
+USE MissionSQL;
+
+-- Joins
+
+-- Inner JOIN
+SELECT * from Products as P 
+INNER JOIN Sales as S
+ON P.Product_ID = S.Product_ID
+
+-- Left JOIN
+SELECT * from Products as P 
+LEFT JOIN Sales as S
+ON P.Product_ID = S.Product_ID
+
+-- Right JOIN
+SELECT * from Products as P 
+RIGHT JOIN Sales as S
+ON P.Product_ID = S.Product_ID
+
+-- Full Outer JOIN
+SELECT * from Products P 
+FULL OUTER JOIN Sales S
+ON P.Product_ID = S.Product_ID

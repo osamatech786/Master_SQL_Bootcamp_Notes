@@ -66,7 +66,7 @@ SELECT * FROM sales;
 -- ORDER BY ASC
 SELECT * FROM sales ORDER BY price;
 SELECT * FROM sales ORDER BY 5; -- 5 indicates column number (i.e price) 
-SELECT * FROM sales ORDER BY price, sales_date DESC;
+SELECT * FROM sales ORDER BY price, sales_date ASC;
 
 -- ORDER BY DESC
 SELECT * FROM sales ORDER BY price DESC;
@@ -105,4 +105,3 @@ SELECT *  FROM sales WHERE product_name NOT IN('Laptop','Phone'); -- other than 
 
 --sales_id, product_name, sales_date, qty, price
 --1, Washing Machine, 2022-09-22 23:26:00, 1, 234.33
-
